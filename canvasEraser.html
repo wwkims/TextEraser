@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Page Title</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'> -->
+  <style>
+      body {
+          margin: 0;
+          padding: 0;
+      }
+
+      .box {
+          display: inline-block;
+          width: 500px;
+          height: 400px;
+      }
+
+      canvas {
+          /* background: transparent; */
+          border: 1px solid black;
+          width: 100%;
+          height: 100%;
+      }
+  </style>
+  <script src='js/jquery-3.6.0.min.js'></script>
+  <script src='js/testCanvas.js'></script>
+</head>
+
+<body>
+<div style="
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+  ">
+  <div style="display: flex; justify-content: center; flex-direction: column; align-items:center;">
+    <textarea id="memo" style="resize: none; width: 500px; height: 200px; font-size: 20px;"></textarea>
+    <div onclick="showText()" style="margin: 20px 0 20px 0;">
+      <button style="width: 500px; height: 20px; ">지우기</button>
+    </div>
+  </div>
+  <div class="box">
+    <canvas id="canvas"></canvas>
+  </div>
+  <div style="margin: 20px 0 0 0;">
+    <button onclick="reset()" style="height: 20px; width: 200px;">reset</button>
+  </div>
+</div>
+</body>
+
+</html>
+<script>
+  function showText() {
+    let text = $("#memo").val();
+    let _context;
+    againCount = 10;
+    context.length = 0;
+
+    if (text.indexOf("\n")) {
+      _context = text.split('\n');
+    }
+
+    let _contextLength = _context.length;
+    for (i = 0; i < _contextLength; i++) {
+
+      let temp = Math.floor(_context[i].length / 25);
+
+      for (j = 0; j < temp; j++) {
+        let _indexAt = 25 + (j * 25);
+        _context[i] = _context[i].slice(0, _indexAt) + "\n" + _context[i].slice(_indexAt)
+      }
+
+      if (_context[i].indexOf("\n")) {
+        contextList = _context[i].split('\n');
+        for (z = 0; z < contextList.length; z++) {
+          context.push(contextList[z]);
+        }
+      } else {
+        context.push(_context[i]);
+      }
+    }
+
+    drowing("reset");
+  }
+
+  function reset() {
+    if (againCount <= 1) {
+      alert("내용을 다시 써주세요.")
+      return;
+    }
+    drowing("again")
+  }
+</script>
